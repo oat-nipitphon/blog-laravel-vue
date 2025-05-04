@@ -16,7 +16,27 @@ class Reward extends Model
 
     use HasFactory, HasApiTokens, Notifiable;
 
-    protected $table = '';
+    protected $table = 'rewards';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'id',
+        'type_id',
+        'name',
+        'point',
+        'amount',
+        'status',
+        'created_at',
+        'updated_at'
+    ];
+
+
+    public function reward_status () : BelongsTo {
+        return $this->belongsTo(RewardType::class, 'type_id', 'id');
+    }
+
+
+    public function reward_images () : HasMany {
+        return $this->hasMany(RewardImage::class, 'reward_id', 'id');
+    }
+
 }

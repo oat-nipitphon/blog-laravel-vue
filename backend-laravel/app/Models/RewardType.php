@@ -16,7 +16,14 @@ class RewardType extends Model
 
     use HasFactory, HasApiTokens, Notifiable;
 
-    protected $table = '';
+    protected $table = 'reward_types';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'id',
+        'name',
+        'code',
+        'icon',
+        'created_at',
+        'updated_at'
+    ];
 }

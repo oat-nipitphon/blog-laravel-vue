@@ -16,7 +16,12 @@ class UserStatus extends Model
 
     use HasFactory, HasApiTokens, Notifiable;
 
-    protected $table = '';
+    protected $table = 'user_status';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'id',
+        'name',
+        'code',
+        'icon'
+    ];
 }

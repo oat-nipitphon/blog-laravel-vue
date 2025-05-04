@@ -16,7 +16,12 @@ class UserProfileFollowers extends Model
 
     use HasFactory, HasApiTokens, Notifiable;
 
-    protected $table = '';
+    protected $table = 'user_profile_followers';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'id',
+        'profile_id',
+        'profile_id_followers',
+        'status'
+    ];
 }

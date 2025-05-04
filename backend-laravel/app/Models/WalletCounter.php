@@ -16,8 +16,28 @@ class WalletCounter extends Model
 
     use HasFactory, HasApiTokens, Notifiable;
 
-    protected $table = '';
+    protected $table = 'wallet_counters';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'id',
+        'wallet_id',
+        'reward_id',
+        'point',
+        'status',
+        'detail',
+        'created_at',
+        'updated_at'
+    ];
+
+    public function wallets () : HasMany {
+        return $this->hasMany(UserWallet::class, 'wallet_id', 'id');
+    }
+
+    public function rewards () : HasMany {
+        return $this->hasMany(Reward::class, 'reward_id', 'id');
+    }
+
+
+
 
 }

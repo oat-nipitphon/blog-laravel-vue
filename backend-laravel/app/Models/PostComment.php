@@ -16,7 +16,14 @@ class PostComment extends Model
 
     use HasFactory, HasApiTokens, Notifiable;
 
-    protected $table = '';
+    protected $table = 'post_comments';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'id',
+        'profile_id_comment',
+        'comment',
+        'status',
+        'created_at',
+        'updated_at'
+    ];
 }

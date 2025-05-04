@@ -16,7 +16,14 @@ class UserProfileImage extends Model
 
     use HasFactory, HasApiTokens, Notifiable;
 
-    protected $table = '';
+    protected $table = 'user_profile_images';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'id',
+        'profile_id',
+        'image_data',
+        'image_status',
+        'created_at',
+        'updated_at'
+    ];
 }

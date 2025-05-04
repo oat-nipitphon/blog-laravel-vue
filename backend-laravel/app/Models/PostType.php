@@ -16,7 +16,12 @@ class PostType extends Model
 
     use HasFactory, HasApiTokens, Notifiable;
 
-    protected $table = '';
+    protected $table = 'post_types';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'id',
+        'name',
+        'code',
+        'icon'
+    ];
 }

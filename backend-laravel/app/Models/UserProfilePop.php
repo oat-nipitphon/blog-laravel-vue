@@ -16,7 +16,12 @@ class UserProfilePop extends Model
 
     use HasFactory, HasApiTokens, Notifiable;
 
-    protected $table = '';
+    protected $table = 'user_profile_pops';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'id',
+        'profile_id',
+        'profile_id_pop',
+        'status'
+    ];
 }

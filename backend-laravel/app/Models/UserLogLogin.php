@@ -16,7 +16,21 @@ class UserLogLogin extends Model
 
     use HasFactory, HasApiTokens, Notifiable;
 
-    protected $table = '';
+    protected $table = 'user_log_logins';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'id',
+        'user_id',
+        'status',
+        'time_in',
+        'time_out',
+        'time_total_login',
+        'created_at',
+        'updated_at'
+    ];
+
+    public function users () : BelongsTo {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
 }

@@ -16,7 +16,17 @@ class UserProfileContact extends Model
 
     use HasFactory, HasApiTokens, Notifiable;
 
-    protected $table = '';
+    protected $table = 'user_profile_contacts';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'id',
+        'profile_id',
+        'name',
+        'url',
+        'detail',
+        'status',
+        'image_data',
+        'created_at',
+        'updated_at'
+    ];
 }

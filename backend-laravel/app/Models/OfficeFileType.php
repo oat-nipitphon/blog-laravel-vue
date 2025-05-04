@@ -16,7 +16,12 @@ class OfficeFileType extends Model
 
     use HasFactory, HasApiTokens, Notifiable;
 
-    protected $table = '';
+    protected $table = 'office_file_types';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'id',
+        'name',
+        'code',
+        'icon'
+    ];
 }

@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
@@ -21,6 +24,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'status_id',
+        'created_at',
+        'updated_at'
     ];
 
     /**
@@ -42,4 +48,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function user_status () : BelongsTo {
+        return $this->belongsTo(UserStatus::class, 'status_id', 'id');
+    }
+
+    // report log login
+    public function report_log_logins () : HasMany {
+        return $this->hasMany(UserLogLogin::class, 'user_id', 'id');
+    }
+
+    // check status login now
+    public function check_status_login () : HasOne {
+        return $this->hasOne(UserLogLogin::class, 'user_id', 'id')->latestOfMany();
+    }
+
 }

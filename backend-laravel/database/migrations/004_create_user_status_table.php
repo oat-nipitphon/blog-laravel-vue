@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('status_users', function (Blueprint $table) {
+        Schema::create('user_status', function (Blueprint $table) {
             $table->id();
             $table->float('code');
             $table->string('name');
@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        DB::statement('ALTER TABLE status_users MODIFY icon LONGBLOB NULL');
+        DB::statement('ALTER TABLE user_status MODIFY icon LONGBLOB NULL');
     }
 
     /**

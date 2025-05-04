@@ -16,7 +16,23 @@ class UserWallet extends Model
 
     use HasFactory, HasApiTokens, Notifiable;
 
-    protected $table = '';
+    protected $table = 'user_wallets';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'id',
+        'user_id',
+        'point',
+        'status',
+        'created_at',
+        'updated_at'
+    ];
+
+    public function user () : HasMany {
+        return $this->hasMany(User::class, 'user_id', 'id');
+    }
+
+    public function wallet_counters () : BelongsTo {
+        return $this->belongsTo(WalletCounter::class, 'wallet_id', 'id');
+    }
+
 }

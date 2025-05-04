@@ -16,8 +16,13 @@ class VideoType extends Model
 
     use HasFactory, HasApiTokens, Notifiable;
 
-    protected $table = '';
+    protected $table = 'video_types';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'id',
+        'name',
+        'code',
+        'icon'
+    ];
 
 }

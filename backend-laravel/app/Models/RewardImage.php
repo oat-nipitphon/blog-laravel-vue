@@ -16,7 +16,14 @@ class RewardImage extends Model
 
     use HasFactory, HasApiTokens, Notifiable;
 
-    protected $table = '';
+    protected $table = 'reward_images';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'id',
+        'reward_id',
+        'image_data',
+        'status',
+        'created_at',
+        'updated_at'
+    ];
 }

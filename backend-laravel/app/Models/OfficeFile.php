@@ -14,8 +14,24 @@ class OfficeFile extends Model
 {
     use HasFactory, HasApiTokens, Notifiable;
 
-    protected $table = '';
+    protected $table = 'office_files';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'id',
+        'profile_id',
+        'post_id',
+        'type_id',
+        'file_data',
+        'file_name',
+        'file_path',
+        'file_status',
+        'created_at',
+        'updated_at',
+    ];
+
+    public function office_file_type () : BelongsTo {
+        return $this->belongsTo(OfficeFileType::class, 'type_id', 'id');
+    }
+
 
 }

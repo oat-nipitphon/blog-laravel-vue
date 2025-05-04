@@ -16,7 +16,13 @@ class PostImage extends Model
 
     use HasFactory, HasApiTokens, Notifiable;
 
-    protected $table = '';
+    protected $table = 'post_images';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'id',
+        'post_id',
+        'image_data',
+        'created_at',
+        'updated_at'
+    ];
 }
