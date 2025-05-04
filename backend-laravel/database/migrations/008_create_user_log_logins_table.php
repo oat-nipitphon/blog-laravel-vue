@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->enum('status', ['offline', 'online'])->default('offline');
-            $table->dateTime('time_in');
-            $table->dateTime('time_out');
+            $table->dateTime('time_in')->nullable();
+            $table->dateTime('time_out')->nullable();
             $table->float('time_total_login')->nullable();
             $table->timestamps();
         });

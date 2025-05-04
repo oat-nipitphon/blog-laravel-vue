@@ -38,23 +38,17 @@ class UserProfile extends Model
         return $this->hasOne(UserProfileImage::class, 'profile_id', 'id');
     }
 
-    public function profile_contact () : HasMany {
+    public function profile_contacts () : HasMany {
         return $this->hasMany(UserProfileContact::class, 'profile_id', 'id');
     }
 
-    public function profile_pop () : HasMany {
+    public function profile_pops () : HasMany {
         return $this->hasMany(UserProfilePop::class, 'profile_id', 'id');
     }
 
     public function profile_followers () : HasMany {
         return $this->hasMany(UserProfileFollowers::class, 'profile_id', 'id');
     }
-
-
-    public function user_wallet () : HasOne {
-        return $this->hasOne(UserWallet::class, 'user_id', 'id');
-    }
-
 
     public function posts () : HasMany {
         return $this->hasMany(Post::class);

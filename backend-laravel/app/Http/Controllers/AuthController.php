@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\UserProfile;
 use App\Models\UserLogLogin;
+use App\Models\UserWallet;
 
 class AuthController extends Controller
 {
@@ -46,7 +47,14 @@ class AuthController extends Controller
                 'created_at' => now()
             ]);
 
-            if (empty($user_profile)) {
+            $user_wallet = UserWallet::create([
+                'user_id' => $user->id,
+                'point' => 0,
+                'status' => 'active',
+                'created_at' => now(),
+            ]);
+
+            if (empty($user_profile) && empty($user_wallet)) {
                 return response()->json([
                     'message' => 'register create profile false.'
                 ], 404);
@@ -55,7 +63,8 @@ class AuthController extends Controller
             return response()->json([
                 'message' => 'register successfully.',
                 'user' => $user,
-                'userProfile' => $user_profile
+                'userProfile' => $user_profile,
+                'userWallet' => $user_wallet
             ], 201);
 
         } catch (\Exception $e) {
@@ -138,8 +147,8 @@ class AuthController extends Controller
 
                 $log_logout->update([
                     'user_id' => $user->id,
-                    'time_out' => now(),
                     'status' => "offline",
+                    'time_out' => now(),
                     'updated_at' => now()
                 ]);
 

@@ -54,6 +54,15 @@ class User extends Authenticatable
         return $this->belongsTo(UserStatus::class, 'status_id', 'id');
     }
 
+    public function user_wallet () : HasOne {
+        return $this->hasOne(UserWallet::class, 'user_id', 'id');
+    }
+
+    // get user profile start auth login
+    public function user_profile () : HasOne {
+        return $this->hasOne(UserProfile::class, 'user_id', 'id');
+    }
+
     // report log login
     public function report_log_logins () : HasMany {
         return $this->hasMany(UserLogLogin::class, 'user_id', 'id');
