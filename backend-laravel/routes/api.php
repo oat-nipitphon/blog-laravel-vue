@@ -22,6 +22,7 @@ use App\Http\Controllers\AdminWalletController;
 use App\Models\UserStatus;
 use App\Models\PostType;
 use App\Models\RewardType;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -126,6 +127,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     }
 });
 
+Route::get('/test_get', function () {
+    return response()->json([
+        'message' => 'test api',
+        'userStatus' => UserStatus::all()
+    ]);
+});
+
 Route::get('/get_user_status', function () {
     return response()->json(UserStatus::all());
 });
@@ -147,6 +155,7 @@ Route::prefix('/auth')->group(function () {
     // ********** User Profile Pops ***************
     Route::apiResource('/user_profile_pops', UserProfilePopController::class);
     Route::post('/pop_like/{postUserID}/{authUserID}', [UserProfilePopController::class, 'popLikeProfile']);
+
 
     // ********** User Profile Followers ***************
     Route::apiResource('/user_profile_followers', UserProfileFollowersController::class);
@@ -178,6 +187,7 @@ Route::prefix('/auth')->group(function () {
         Route::delete('/delete/{id}', [RewardController::class, 'destroy']);
     });
 
+
     // ********** Wallets *************
     Route::apiResource('wellets', WalletController::class);
 
@@ -191,9 +201,6 @@ Route::prefix('/auth')->group(function () {
     });
 
 
-
-
-
 })->middleware('auth:sanctum');
 
 
@@ -201,8 +208,10 @@ Route::prefix('/auth')->group(function () {
 // ********************************* Admin Manager *********************************
 Route::prefix('/manager')->group(function () {
 
+
     // ************** User Profiles **************
     Route::apiResource('/user_profiles', AdminUserProfileController::class);
+
 
     // ************** Posts **************
     Route::apiResource('/posts', AdminPostController::class);
@@ -218,8 +227,6 @@ Route::prefix('/manager')->group(function () {
 
     // ************** Wallets **************
     Route::apiResource('/wallets', AdminWalletController::class);
-
-
 
 
 })->middleware('auth:sanctum');
