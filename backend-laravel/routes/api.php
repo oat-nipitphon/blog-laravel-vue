@@ -1,7 +1,9 @@
 <?php
 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserProfileController;
@@ -11,6 +13,11 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\RewardController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\WalletCounterController;
+
+use App\Http\Controllers\AdminPostController;
+use App\Http\Controllers\AdminRewardController;
+use App\Http\Controllers\AdminUserProfileController;
+use App\Http\Controllers\AdminWalletController;
 
 use App\Models\UserStatus;
 use App\Models\PostType;
@@ -145,13 +152,31 @@ Route::prefix('/auth')->group(function () {
     Route::apiResource('/user_profile_followers', UserProfileFollowersController::class);
     Route::post('/followers/{postUserID}/{authUserID}', [UserProfileFollowersController::class, 'followersProfile']);
 
+
     // ********** Posts ***************
-    Route::apiResource('posts', PostController::class);
+    Route::apiResource('/posts', PostController::class);
+    Route::post('/posts/store/{postID}', [PostController::class, 'postStore']);
+    Route::post('/posts/update', [PostController::class, 'update']);
+
+
+    // ********** Posts Recover ***************
+    Route::post('/posts/recover/{postID}', [PostController::class, 'recoverPost']);
+    Route::post('/posts/report_recover/{userID}', [PostController::class, 'recoverGetPost']);
+    Route::post('/posts/recoverSelected', [PostController::class, 'recoverSelected']);
+    Route::post('/posts/deleteSelected', [PostController::class, 'deleteSelected']);
+    Route::post('/{userID}/{postID}/{popStatusLike}', [PostController::class, 'postPopLike']);
+    Route::post('/{userID}/{postID}/{popStatusDisLike}', [PostController::class, 'postPopDisLike']);
 
 
     // ********** Rewards *************
     Route::apiResource('rewards', RewardController::class);
-
+    Route::prefix('/reward')->group(function () {
+        Route::get('/getRewards', [RewardController::class, 'index']);
+        Route::post('/newRewards', [RewardController::class, 'store']);
+        Route::get('/show/{id}', [RewardController::class, 'show']);
+        Route::put('/update/{id}', [RewardController::class, 'update']);
+        Route::delete('/delete/{id}', [RewardController::class, 'destroy']);
+    });
 
     // ********** Wallets *************
     Route::apiResource('wellets', WalletController::class);
@@ -159,6 +184,42 @@ Route::prefix('/auth')->group(function () {
 
     // ********** Wallet Counters *************
     Route::apiResource('wallet_counters', WalletCounterController::class);
+    Route::prefix('/cartItems')->group(function () {
+        Route::post('/userConfirmSelectReward', [WalletCounterController::class, 'userConfirmSelectReward']);
+        Route::get('/getReportReward/{userID}', [WalletCounterController::class, 'getReportReward']);
+        Route::post('/cancel_reward/{itemID}', [WalletCounterController::class, 'cancelReward']);
+    });
+
+
+
+
+
+})->middleware('auth:sanctum');
+
+
+
+// ********************************* Admin Manager *********************************
+Route::prefix('/manager')->group(function () {
+
+    // ************** User Profiles **************
+    Route::apiResource('/user_profiles', AdminUserProfileController::class);
+
+    // ************** Posts **************
+    Route::apiResource('/posts', AdminPostController::class);
+    Route::post('/blockOrUnBlock/{postID}/{blockStatus}', [AdminPostController::class, 'blockOrUnBlockPost']);
+
+
+    // ************** Rewards **************
+    Route::prefix('/reward')->group(function () {
+        Route::apiResource('/manager', AdminRewardController::class);
+        Route::post('/updateStatusReward/{rewardID}', [AdminRewardController::class, 'updateStatusReward']);
+    });
+
+
+    // ************** Wallets **************
+    Route::apiResource('/wallets', AdminWalletController::class);
+
+
 
 
 })->middleware('auth:sanctum');
