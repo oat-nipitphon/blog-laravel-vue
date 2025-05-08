@@ -62,9 +62,7 @@ class AuthController extends Controller
 
             return response()->json([
                 'message' => 'register successfully.',
-                'user' => $user,
-                'userProfile' => $user_profile,
-                'userWallet' => $user_wallet
+                'register_user' => $user
             ], 201);
 
         } catch (\Exception $e) {
