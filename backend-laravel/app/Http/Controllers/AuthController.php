@@ -24,7 +24,7 @@ class AuthController extends Controller
                 'email' => 'required|string|email|max:255|unique:users',
                 'username' => 'required|string|max:255|unique:users',
                 'password' => 'required|string|min:3',
-                'status_id' => 'required|integer',
+                'statusID' => 'required|integer',
             ]);
 
             $user = User::create([
@@ -32,7 +32,7 @@ class AuthController extends Controller
                 'username' => $validate['username'],
                 'email' => $validate['email'],
                 'password' => Hash::make($validate['password']),
-                'status_id' => $validate['status_id'],
+                'status_id' => $validate['statusID'],
                 'created_at' => now()
             ]);
 
@@ -64,7 +64,6 @@ class AuthController extends Controller
                 'message' => 'register successfully.',
                 'register_user' => $user
             ], 201);
-
         } catch (\Exception $e) {
             return response()->json([
                 'message' => "register function error",
@@ -100,8 +99,8 @@ class AuthController extends Controller
 
                 $log_login = UserLogLogin::create([
                     'user_id' => $user->id,
+                    'status' => "online",
                     'time_in' => now(),
-                    'status_login' => "online",
                     'created_at' => now(),
                 ]);
 
@@ -113,17 +112,17 @@ class AuthController extends Controller
 
                 return response()->json([
                     'message' => "Login successfullry.",
+                    'userLogin' => $user,
+                    'LogLogin' => $log_login,
                     'token' => $token,
                 ], 200);
             }
-
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'login function error',
                 'error' => $e->getMessage()
             ], 500);
         }
-
     }
 
     // Logout
@@ -143,10 +142,15 @@ class AuthController extends Controller
                     ], 404);
                 }
 
+                $timeIn = \Carbon\Carbon::parse($log_logout->time_in);
+                $timeOut = now();
+                $totalLogin = $timeIn->diffInSeconds($timeOut);
+
                 $log_logout->update([
                     'user_id' => $user->id,
                     'status' => "offline",
                     'time_out' => now(),
+                    'time_total_login' => $totalLogin,
                     'updated_at' => now()
                 ]);
 
@@ -154,9 +158,10 @@ class AuthController extends Controller
 
                 return response()->json([
                     'message' => "logout successfullry.",
+                    'logLogout' => $log_logout,
+                    'timeLogin' => $totalLogin,
                 ], 200);
             }
-
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'logout function error.',
@@ -164,5 +169,4 @@ class AuthController extends Controller
             ], 500);
         }
     }
-
 }

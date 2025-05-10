@@ -1,12 +1,12 @@
-import './assets/main.css'
+// import './assets/main.css'
 import './assets/tailwind.css'
 
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
 // // import Bootstrap 5
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap/dist/js/bootstrap.bundle'
+// import 'bootstrap/dist/css/bootstrap.css'
+// import 'bootstrap/dist/js/bootstrap.bundle'
 
 import { createApp, markRaw } from 'vue'
 import { createPinia } from 'pinia'

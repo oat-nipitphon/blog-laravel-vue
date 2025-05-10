@@ -48,7 +48,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
             'user_profile',
             'user_profile.profile_image'
 
-        ])->findOrFail(1);
+        ])->findOrFail($user_req->id);
 
         $token = $user_login->createToken($user_login->username)->plainTextToken;
 
@@ -129,7 +129,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::get('/get_user_status', function () {
-    return response()->json(UserStatus::all());
+    return response()->json([
+        'userStatus' => UserStatus::all()
+    ], 200);
+});
+Route::post('/register/check_email', function (Request $request) {
+    $exists = User::where('email', $request->email)->exists();
+    return response()->json(['exists' => $exists]);
+});
+
+Route::post('/register/check_username', function (Request $request) {
+    $exists = User::where('username', $request->username)->exists();
+    return response()->json(['exists' => $exists]);
 });
 
 Route::post('/register', [AuthController::class, 'register']);
